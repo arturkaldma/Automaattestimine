@@ -57,11 +57,11 @@ package ee.ttu.weather.test; /**
      }
 
      @Test
-     public void testIfWeatherAtNowHasGeoCoordinates() {
+     public void testIfWeatherAtNowHasMaxTemp() {
          ForecastAPI response = new ForecastAtNow().getForecastAtNow(commonRequest);
 
          assertNotNull(response);
-         assertNotNull(response.getCoordinates());
+         assertNotNull(response.getMaxTemp());
      }
 
      @Test
