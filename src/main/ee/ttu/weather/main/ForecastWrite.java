@@ -12,7 +12,7 @@ public class ForecastWrite {
 
     private String outputDir = "C:/Users/artur/workspace/Forecast/src/main/";
 
-    public void insertDataIntofile(String fileName, String data) throws IOException {
+    public void InsertDataIntoFile(String fileName, String data) throws IOException {
         String outputFile = outputDir + fileName;
         BufferedWriter bw = new BufferedWriter(new FileWriter(outputFile));
         bw.write(data);

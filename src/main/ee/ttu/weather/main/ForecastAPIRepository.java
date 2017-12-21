@@ -1,15 +1,13 @@
 package ee.ttu.weather.main;
 
-import org.json.JSONArray;
-import org.json.JSONException;
+
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Calendar;
-import java.util.Date;
+
 import java.util.*;
 /**
  * Created by artur on 15.10.2017.
