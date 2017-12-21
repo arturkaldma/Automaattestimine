@@ -35,7 +35,7 @@ public class ForecastWrite {
                     sb.append("max: " + String.valueOf(element.getMaxTemp()) + " \n");
                 }
             }
-            insertDataIntofile(fileName, sb.toString());
+            InsertDataIntoFile(fileName, sb.toString());
         }
     }
 }

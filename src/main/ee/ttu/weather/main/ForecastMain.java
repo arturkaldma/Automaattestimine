@@ -12,7 +12,15 @@ public class ForecastMain {
 
         try {
 
+            ForecastAPIRepository forecastAPIRepository = new ForecastAPIRepository();
+            ForecastRead forecastRead = new ForecastRead();
+            List<String> locations = forecastRead.getByUserInput();
 
+            List<ForecastAPI> forecasts = forecastAPIRepository.getForecastForLocations(locations);
+            ForecastWrite forecastWrite = new ForecastWrite();
+            forecastWrite.WriteForecastsToFile(forecasts);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
