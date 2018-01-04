@@ -120,14 +120,18 @@ package ee.ttu.weather.test; /**
          response.setCountry("EE");
          response.setCoordinates("0.000000;0.000000");
          response.setDate(new Date());
-
+         // delete file if exists
+         File file = new File("C:/Users/artur/workspace/Forecast/src/main/Tallinn.txt");
+         if (file.exists() && !file.isDirectory()){
+             file.delete();
+         }
 
          when(makeNewRequest.makeRequest(any(), anyString())).thenReturn(new JSONObject(response));
 
 
 
          forecastWrite.InsertDataIntoFile("Tallinn.txt", response.toString());
-
+         assertTrue(file.exists());
      }
  }
 
