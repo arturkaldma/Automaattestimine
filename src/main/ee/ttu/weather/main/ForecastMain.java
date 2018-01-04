@@ -13,6 +13,7 @@ public class ForecastMain {
         try {
 
             ForecastAPIRepository forecastAPIRepository = new ForecastAPIRepository();
+            MakeNewRequest makeNewRequest = new MakeNewRequest();
             ForecastRead forecastRead = new ForecastRead();
             List<String> locations = forecastRead.getByUserInput();
 

@@ -17,6 +17,7 @@ public class ForecastAPI {
     private String country;
     private String coordinates;
 
+
     public double getMinTemp() {
         return minTemp;
     }
@@ -59,6 +60,7 @@ public class ForecastAPI {
     public void setCountry(String country) {
         this.country = country;
     }
+
 
     public String getCoordinates() {
         return coordinates;

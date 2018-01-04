@@ -19,7 +19,7 @@ public class ForecastRead {
 
         if(Objects.equals(choice, "1")) {
             try {
-                System.out.print("Choose a city in format: \"City, CC\" where CC means country code:");
+                System.out.print("Choose a city in format: \"City, CC\" where CC means country code");
                 List<String> res = new ArrayList<>();
                 res.add(br.readLine().trim());
                 return res;

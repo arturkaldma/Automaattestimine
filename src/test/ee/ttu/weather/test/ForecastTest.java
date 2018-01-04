@@ -13,25 +13,24 @@ package ee.ttu.weather.test; /**
  import java.util.Date;
  import java.util.List;
  import java.io.IOException;
+ import static org.junit.Assert.assertTrue;
+ import org.json.JSONObject;
+
 
  public class ForecastTest {
 
      private ForecastAPIRepository forecastAPIRepository;
      private ForecastAPIRequest commonRequest;
-     private ThreeDaysForecast threeDaysForecast;
-     private ForecastAtNow forecastAtNow;
 
      @Before
      public void startIt() throws Exception {
          forecastAPIRepository = new ForecastAPIRepository();
          commonRequest = new ForecastAPIRequest("Tallinn", "EE");
-         threeDaysForecast = new ThreeDaysForecast();
-         forecastAtNow = new ForecastAtNow();
      }
 
      @Test
      public void testGetWeatherAtNowIfCityAndCountryAreSame() {
-         ForecastAPI response = forecastAtNow.getForecastAtNow(commonRequest);
+         ForecastAPI response = forecastAPIRepository.getForecastAtNow(commonRequest);
 
          assertEquals(commonRequest.getCity(), response.getCity());
          assertEquals(commonRequest.getCountry(), response.getCountry());
@@ -39,14 +38,14 @@ package ee.ttu.weather.test; /**
 
      @Test
      public void testGetWeatherAtNow() {
-         ForecastAPI response = forecastAtNow.getForecastAtNow(commonRequest);
+         ForecastAPI response = forecastAPIRepository.getForecastAtNow(commonRequest);
 
          assertNotNull(response);
      }
 
      @Test
      public void testGetNextThreeDaysForecast() {
-         List<ForecastAPI> response = threeDaysForecast.getThreeDaysForecast(commonRequest);
+         List<ForecastAPI> response = forecastAPIRepository.getThreeDaysForecast(commonRequest);
 
          assertNotNull(response);
          assertEquals(3, response.size());
@@ -58,7 +57,7 @@ package ee.ttu.weather.test; /**
 
      @Test
      public void testIfWeatherAtNowHasMaxTemp() {
-         ForecastAPI response = new ForecastAtNow().getForecastAtNow(commonRequest);
+         ForecastAPI response = new ForecastAPIRepository().getForecastAtNow(commonRequest);
 
          assertNotNull(response);
          assertNotNull(response.getMaxTemp());
@@ -66,12 +65,14 @@ package ee.ttu.weather.test; /**
 
      @Test
      public void testIfForecastHasGeoCoordinates() {
-         List<ForecastAPI> response = new ThreeDaysForecast().getThreeDaysForecast(commonRequest);
+         List<ForecastAPI> response = new ForecastAPIRepository().getThreeDaysForecast(commonRequest);
 
          for (ForecastAPI e : response) {
              assertNotNull(e.getCoordinates());
          }
      }
+
+     //vana test mis ei ole väga mockimine
      @Test
      public void testBothRequestsIfFilesCreated() throws IOException {
          ForecastAPIRepository forecastAPIRepository = mock(ForecastAPIRepository.class);
@@ -103,4 +104,31 @@ package ee.ttu.weather.test; /**
 
          assertTrue(file.exists());
      }
+
+     //uus test mis on rohkem mockimine
+     @Test
+     public void testMockBothRequestsIfFilesCreated() throws IOException {
+
+         MakeNewRequest makeNewRequest = mock(MakeNewRequest.class);
+         ForecastAPIRepository forecastAPIRepository = new ForecastAPIRepository();
+         forecastAPIRepository.setMaker(makeNewRequest);
+         ForecastWrite forecastWrite = new ForecastWrite();
+
+
+         ForecastAPI response = new ForecastAPI();
+         response.setCity("Tallinn");
+         response.setCountry("EE");
+         response.setCoordinates("0.000000;0.000000");
+         response.setDate(new Date());
+
+
+         when(makeNewRequest.makeRequest(any(), anyString())).thenReturn(new JSONObject(response));
+
+
+
+         forecastWrite.InsertDataIntoFile("Tallinn.txt", response.toString());
+
+     }
  }
+
+
